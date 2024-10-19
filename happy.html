@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Câu hỏi hạnh phúc</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet"> <!-- Font chữ đẹp hơn -->
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfd9);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            border: 2px solid #ff69b4;
+            border-radius: 15px;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in-out;
+            z-index: 2;
+        }
+
+        h1 {
+            color: #ff69b4;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            animation: slideIn 1s forwards;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #ff1493;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .happiness-question {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 30px; /* Kích thước biểu tượng trái tim */
+            animation: fall 4s forwards; /* Thay đổi thời gian rơi */
+            opacity: 1;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+
+        .notification {
+            display: none; /* Ẩn thông báo ban đầu */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2.5em; /* Kích thước chữ lớn */
+            color: #ff69b4; /* Màu chữ hồng */
+            font-family: 'Great Vibes', cursive; /* Font chữ đẹp hơn */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Hiệu ứng bóng cho chữ */
+            z-index: 3; /* Đặt trên cùng */
+            opacity: 0; /* Khởi đầu với độ mờ */
+            animation: pop 0.5s ease forwards; /* Thêm hiệu ứng xuất hiện */
+        }
+
+        @keyframes pop {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0;
+            }
+
+            80% {
+                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 id="question">Bạn có hạnh phúc không?</h1>
+        <div id="happiness-question" class="happiness-question">
+            <button id="happy-button">Có</button>
+            <button id="unhappy-button">Không</button>
+        </div>
+        <div id="notification" class="notification">Thật vui khi bạn hạnh phúc!</div> <!-- Thông báo màu hồng -->
+    </div>
+
+    <script>
+        let isHappyButtonFirst = true;
+
+        document.getElementById('happy-button').addEventListener('click', function () {
+            const question = document.getElementById('question');
+            question.textContent = "Thật vui khi bạn hạnh phúc!"; // Thay đổi nội dung tiêu đề
+            //document.getElementById('notification').style.display = 'block'; // Hiện thông báo
+            createHeartRainEffect();
+
+            // Hiệu ứng mở thông báo
+            const notification = document.getElementById('notification');
+            notification.style.opacity = 1; // Đặt độ mờ là 1 để hiện lên
+            setTimeout(() => {
+                notification.style.display = 'none'; // Ẩn thông báo sau 3 giây
+                question.textContent = "Bạn có hạnh phúc không?"; // Đưa tiêu đề trở lại trạng thái ban đầu
+            }, 3000);
+        });
+
+        document.getElementById('unhappy-button').addEventListener('click', function () {
+            const happyButton = document.getElementById('happy-button');
+            const unhappyButton = document.getElementById('unhappy-button');
+
+            if (isHappyButtonFirst) {
+                unhappyButton.style.order = "1";
+                happyButton.style.order = "2";
+            } else {
+                happyButton.style.order = "1";
+                unhappyButton.style.order = "2";
+            }
+
+            isHappyButtonFirst = !isHappyButtonFirst;
+        });
+
+        function createHeartRainEffect() {
+            for (let i = 0; i < 20; i++) { // Tạo 20 trái tim
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.textContent = '💓'; // Sử dụng biểu tượng trái tim
+                document.body.appendChild(heart);
+                const randomX = Math.random() * window.innerWidth;
+                heart.style.left = `${randomX}px`;
+                heart.style.top = `0px`; // Bắt đầu từ trên cùng
+
+                // Thêm hiệu ứng cho trái tim
+                heart.style.animationDuration = `${Math.random() * 2 + 2}s`; // Đặt thời gian ngẫu nhiên cho mỗi trái tim, rơi chậm hơn
+                heart.style.opacity = 1;
+
+                // Xóa trái tim sau khi rơi
+                setTimeout(() => {
+                    heart.remove();
+                }, 4000); // Thời gian để trái tim bị xóa
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chúc Mừng 20/10</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfd9);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            border: 2px solid #ff69b4;
+            border-radius: 15px;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in-out;
+            z-index: 2;
+        }
+
+        h1 {
+            color: #ff69b4;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            animation: slideIn 1s forwards;
+        }
+
+        .hidden {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .revealed {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #ff1493;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Vẽ hoa */
+        .flower {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: #ff69b4;
+            border-radius: 50%;
+            animation: float 3s ease-in-out infinite alternate;
+        }
+
+        .flower:before,
+        .flower:after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: #ff69b4;
+            border-radius: 50%;
+            top: -50px;
+            left: 0;
+        }
+
+        .flower:after {
+            top: 0;
+            left: -50px;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .flower1 {
+            top: 10%;
+            left: 20%;
+        }
+
+        .flower2 {
+            top: 30%;
+            right: 15%;
+        }
+
+        .flower3 {
+            bottom: 10%;
+            left: 40%;
+        }
+
+        /* Hiệu ứng khi hiện lời chúc */
+        @keyframes fadeSlideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-slide {
+            animation: fadeSlideUp 1s forwards;
+        }
+
+        /* Hiệu ứng trái tim */
+        .heart {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: red;
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            animation: fall 3s forwards;
+            z-index: 1;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="flower flower1"></div>
+    <div class="flower flower2"></div>
+    <div class="flower flower3"></div>
+
+    <div class="container">
+        <h1 id="message">Chúc Mừng Ngày Phụ Nữ Việt Nam 20/10!</h1>
+        <p>Gửi tới người đặc biệt của tôi,</p>
+        <p>Bạn là ánh sáng trong cuộc sống của tôi. Chúc bạn luôn tươi cười và hạnh phúc!</p>
+        <button id="reveal-button">Xem thêm lời chúc</button>
+
+        <div id="hidden-message" class="hidden">
+            <ul>
+                <li>✨ Chúc bạn luôn xinh đẹp và rạng rỡ như những bông hoa!</li>
+                <li>✨ Mong rằng mọi ước mơ của bạn đều trở thành hiện thực!</li>
+                <li>✨ Bạn xứng đáng nhận được tất cả yêu thương và hạnh phúc!</li>
+                <li>✨ Hãy luôn tự tin với bản thân và tỏa sáng nhé!</li>
+                <li>✨ Cảm ơn bạn vì đã mang lại niềm vui cho cuộc sống của tôi!</li>
+            </ul>
+            <button id="next-button" class="hidden">Tiếp</button>
+        </div>
+    </div>
+
+    <audio id="background-audio" src="music.mp3" loop></audio>
+
+    <script>
+        document.getElementById('reveal-button').addEventListener('click', function () {
+            const hiddenMessage = document.getElementById('hidden-message');
+            hiddenMessage.classList.toggle('revealed');
+            hiddenMessage.classList.add('fade-slide');
+            this.style.display = 'none';
+
+            const backgroundAudio = document.getElementById('background-audio');
+            backgroundAudio.play();
+
+            const nextButton = document.getElementById('next-button');
+            nextButton.classList.toggle('hidden');
+            nextButton.classList.toggle('revealed');
+        });
+
+        // Sự kiện khi bấm nút "Tiếp" để mở trang trong tab mới
+        document.getElementById('next-button').addEventListener('click', function () {
+            window.open('happy.html', '_blank');
+        });
+    </script>
+</body>
+
+</html>
