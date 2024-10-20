@@ -160,6 +160,9 @@
                 notification.style.display = 'none'; // Ẩn thông báo sau 3 giây
                 question.textContent = "Bạn có hạnh phúc không?"; // Đưa tiêu đề trở lại trạng thái ban đầu
             }, 3000);
+            setTimeout(() => {
+        window.open('flower.html', '_blank');
+    }, 2000);
         });
 
         document.getElementById('unhappy-button').addEventListener('click', function () {
